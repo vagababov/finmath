@@ -1,7 +1,12 @@
-package finamth
+// Package finmath implements routines for financial math computations.
+// Note, that it uses float64 so it should be used with reservation for computations that require
+// arbitrary precision.
+package finmath
 
 import "math"
 
+// CompoundInterest returns the value of the investment with start value after periods accruing
+// interest with rate.
 func CompoundInterest(start, periods, rate float64) float64 {
 	return start * math.Pow(1.+rate, periods)
 }
@@ -30,4 +35,14 @@ func FV(rent, periods, rate float64) float64 {
 // rate = 0.045/12
 func PMT(sum, periods, rate float64) float64 {
 	return sum * rate / (1. - math.Pow(1.+rate, -periods))
+}
+
+// RTC rounds the given amount to the nearest cent.
+func RTC(v float64) float64 {
+	return math.Floor(v*100+0.5) / 100.
+}
+
+// FTC rounds down the given amount to the cent.
+func FTC(v float64) float64 {
+	return math.Trunc(v*100) / 100
 }
