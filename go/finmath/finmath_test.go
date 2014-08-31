@@ -14,24 +14,30 @@ func TestCompoundInterest(t *testing.T) {
 
 func TestFV(t *testing.T) {
 	if got, want := RTC(FV(1596.18, 360, 0.03625/12)), 1036696.15; got != want {
-		t.Errorf("RTC(FV): got: %f want: %f", got, want)
+		t.Errorf("RTC(FV): got: %.2f want: %.2f", got, want)
 	}
 	// Verify PV and FV relationship holds.
 	if got, want := RTC(FV(1596.18, 360, 0.03625/12)), RTC(PV(1596.18, 360, 0.03625/12)*math.Pow(1+0.03625/12, 360)); got != want {
-		t.Errorf("FV != PV*(1+i)^n: got: %f want: %f", got, want)
+		t.Errorf("FV != PV*(1+i)^n: got: %.2f want: %.2f", got, want)
 	}
 }
 
 func TestPV(t *testing.T) {
 	if got, want := RTC(PV(1200, 15*12, 0.045/12)), 156864.12; got != want {
-		t.Errorf("RTC(PV): got: %f want: %f", got, want)
+		t.Errorf("RTC(PV): got: %.2f want: %.2f", got, want)
 	}
 }
 
 func TestPMT(t *testing.T) {
 	if got, want := RTC(PMT(350000, 360, 0.03625/12)), 1596.18; got != want {
-		t.Errorf("RTV(PMT): got: %f want: %f", got, want)
+		t.Errorf("RTC(PMT): got: %.2f want: %.2f", got, want)
 	}
+}
+
+func TestPMTF(t *testing.T) {
+  if got, want := RTC(PMTF(5000, 5, 0.07)), 869.45; got != want {
+    t.Errorf("RTC(PMTF): got: %.2f want: %.2f", got, want)
+  }
 }
 
 func TestRoundting(t *testing.T) {
@@ -51,10 +57,10 @@ func TestRoundting(t *testing.T) {
 
 	for _, test := range tests {
 		if got, want := RTC(test.v), test.wantRTC; got != want {
-			t.Errorf("RTC(%f): got: %f want: %f", test.v, got, want)
+			t.Errorf("RTC(%f): got: %.2f want: %.2f", test.v, got, want)
 		}
 		if got, want := FTC(test.v), test.wantFTC; got != want {
-			t.Errorf("FTC(%f): got: %f want: %f", test.v, got, want)
+			t.Errorf("FTC(%f): got: %.2f want: %.2f", test.v, got, want)
 		}
 	}
 }

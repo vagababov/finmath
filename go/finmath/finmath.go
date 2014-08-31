@@ -1,4 +1,5 @@
-// Package finmath implements routines for financial math computations.
+// Package finmath implements routines for engineering economics computations.
+// Those include mortgate payments, money value change in time, etc.
 // Note, that it uses float64 so it should be used with reservation for computations that require
 // arbitrary precision.
 package finmath
@@ -42,7 +43,8 @@ func PMT(pv, periods, rate float64) float64 {
 	return pv * rate / (1. - math.Pow(1.+rate, -periods))
 }
 
-// PMTF returns the
+// PMTF returns the required payments to make for given number of periods earning
+// rate each period  to reach fv after periods elapsed. A.k.a Sinking fund.
 func PMTF(fv, periods, rate float64) float64 {
 	return fv * rate / (math.Pow(1.+rate, periods) - 1)
 }
