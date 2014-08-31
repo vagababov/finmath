@@ -1,4 +1,4 @@
-finmath
+Finmath
 =======
 
-finmath package contains routines for financial calculations
+Finmath package contains routines in Go that can be used for financial calculations.
