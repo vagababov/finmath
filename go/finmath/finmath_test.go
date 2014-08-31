@@ -10,6 +10,9 @@ func TestCompoundInterest(t *testing.T) {
 	if got, want := CompoundInterest(1000, 2, 0.2), 1440.; got != want {
 		t.Errorf("CompoundInterest: got: %v want: %v", got, want)
 	}
+  if got, want := CompoundInterest(1440, -2, 0.2), 1000.; got != want {
+    t.Errorf("(P/F, i, n): got: %.2f want: %.2f", got, want)
+  }
 }
 
 func TestFV(t *testing.T) {
