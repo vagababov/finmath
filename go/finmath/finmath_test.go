@@ -35,9 +35,19 @@ func TestPMT(t *testing.T) {
 }
 
 func TestPMTF(t *testing.T) {
-  if got, want := RTC(PMTF(5000, 5, 0.07)), 869.45; got != want {
-    t.Errorf("RTC(PMTF): got: %.2f want: %.2f", got, want)
-  }
+	if got, want := RTC(PMTF(5000, 5, 0.07)), 869.45; got != want {
+		t.Errorf("RTC(PMTF): got: %.2f want: %.2f", got, want)
+	}
+}
+
+func TestPMTFS(t *testing.T) {
+	for _, test := range [][]float64{{0, 869.45}, {500, 747.51}} {
+		sv := test[0]
+		want := test[1]
+		if got := RTC(PMTFS(5000, sv, 5, 0.07)); got != want {
+			t.Errorf("PMTFS(%f): got: %.2f want: %.2f", sv, got, want)
+		}
+	}
 }
 
 func TestRoundting(t *testing.T) {

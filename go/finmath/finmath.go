@@ -49,6 +49,14 @@ func PMTF(fv, periods, rate float64) float64 {
 	return fv * rate / (math.Pow(1.+rate, periods) - 1)
 }
 
+// PMTFS calculates PMTF where there's also starting amount earning same rate.
+func PMTFS(fv, sv, periods, rate float64) float64 {
+	// 1. Calculate how much sv will earn in that period of time.
+	sve := CompoundInterest(sv, periods, rate)
+  // 2. Return amount required to put each year to match the difference.
+	return PMTF(fv-sve, periods, rate)
+}
+
 // RTC rounds the given amount to the nearest cent.
 func RTC(v float64) float64 {
 	return math.Floor(v*100+0.5) / 100.
