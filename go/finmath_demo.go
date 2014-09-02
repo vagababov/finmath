@@ -42,11 +42,25 @@ func exPMTFS() {
 	fmt.Printf("PMTFS: %f RTC(PMTFS): %.2f\n", pmt, finmath.RTC(pmt))
 }
 
+func exCI() {
+	var val, periods, rate float64
+	fmt.Println("Enter PV/FV, # of periods and rate per period:")
+	n, err := fmt.Scanf("%f %f %f", &val, &periods, &rate)
+	if n != 3 || err != nil {
+		fmt.Println("Incorrect input: ", err)
+		return
+	}
+	ci := finmath.CompoundInterest(val, periods, rate)
+	fmt.Printf("CI: %f RTC(CI): %.2f\n", ci, finmath.RTC(ci))
+}
+
 func help() {
 	fmt.Println("Executes various financial math functions. Enter value separated by spaces.")
 	fmt.Println("\tquit: to exit\n\tPMT for periodic payment")
 	fmt.Println("\tPMTFS for periodic payment for sinking fund with starting value")
-	fmt.Println("\tPMTF for periodic payment for sinking fund\n")
+	fmt.Println("\tPMTF for periodic payment for sinking fund")
+	fmt.Println("\tCI for compound interest (present or future value)")
+	fmt.Println()
 }
 
 func main() {
@@ -67,6 +81,8 @@ func main() {
 			return
 		case "help":
 			help()
+		case "ci":
+			exCI()
 		case "pmt":
 			exPMT(false)
 		case "pmtfs":
