@@ -16,7 +16,6 @@ func CompoundInterest(start, periods, rate float64) float64 {
 
 // PV (annuity) returns the required amount to put down in order to receive
 // rent for period times with given rate. A.k.a Series present worth (P/A, i, n).
-// if start == 1, then interest is accrued at the start of the period.
 // E.g. to receive 1200 monthly over 15 years on an instrument that earns 4.5%
 // annually, you have to pay now:
 // PV(1200, 15*12, 0.045/12)
@@ -30,9 +29,19 @@ func FV(rent, periods, rate float64) float64 {
 	return (math.Pow(1.+rate, periods) - 1) / rate * rent
 }
 
-// PVG returns the required
+// PMTG returns the required fixed payment to offset constantly growing maintenance costs, a.k.a arithmetic gradient uniform series (A/G, i, n).
+// Or, annual worth of an arithmetic gradient.
+// E.g. if each period the maintenance costs are growing by 250 and money is earning rate 1%
+// each period for 10 years, then payment is PVG(250, 10, 0.01)
+func PMTG(gradient, periods, rate float64) float64 {
+	x := math.Pow(1.+rate, periods)
+	return gradient * ((x - rate*periods - 1) / (rate*x - rate))
+}
+
+// PVG returns the present worth of an uniformly increasing/decreasing value, a.k.a. arithmetic gradient present worth (P/G, i, n)
 func PVG(gradient, periods, rate float64) float64 {
-	return 0
+	x := math.Pow(1.+rate, periods)
+	return gradient * ((x - rate*periods - 1) / (rate * rate * x))
 }
 
 // PMT (periodic payment) returns the payment amount to repay "pv" over
@@ -55,7 +64,7 @@ func PMTF(fv, periods, rate float64) float64 {
 func PMTFS(fv, sv, periods, rate float64) float64 {
 	// 1. Calculate how much sv will earn in that period of time.
 	sve := CompoundInterest(sv, periods, rate)
-  // 2. Return amount required to put each year to match the difference.
+	// 2. Return amount required to put each year to match the difference.
 	return PMTF(fv-sve, periods, rate)
 }
 
@@ -68,3 +77,4 @@ func RTC(v float64) float64 {
 func FTC(v float64) float64 {
 	return math.Trunc(v*100) / 100
 }
+

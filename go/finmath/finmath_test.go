@@ -10,9 +10,9 @@ func TestCompoundInterest(t *testing.T) {
 	if got, want := CompoundInterest(1000, 2, 0.2), 1440.; got != want {
 		t.Errorf("CompoundInterest: got: %v want: %v", got, want)
 	}
-  if got, want := CompoundInterest(1440, -2, 0.2), 1000.; got != want {
-    t.Errorf("(P/F, i, n): got: %.2f want: %.2f", got, want)
-  }
+	if got, want := CompoundInterest(1440, -2, 0.2), 1000.; got != want {
+		t.Errorf("(P/F, i, n): got: %.2f want: %.2f", got, want)
+	}
 }
 
 func TestFV(t *testing.T) {
@@ -31,9 +31,21 @@ func TestPV(t *testing.T) {
 	}
 }
 
+func TestPVG(t *testing.T) {
+	if got, want := RTC(PVG(500, 10, 0.1)), 11445.67; got != want {
+		t.Errorf("RTC(PVG): got: %.2f want: %.2f", got, want)
+	}
+}
+
 func TestPMT(t *testing.T) {
 	if got, want := RTC(PMT(350000, 360, 0.03625/12)), 1596.18; got != want {
 		t.Errorf("RTC(PMT): got: %.2f want: %.2f", got, want)
+	}
+}
+
+func TestPMTG(t *testing.T) {
+	if got, want := RTC(PMTG(20000, 8, 0.12)), 58262.88; got != want {
+		t.Errorf("RTC(PMTG): got: %.2f want: %.2f", got, want)
 	}
 }
 
@@ -77,3 +89,4 @@ func TestRoundting(t *testing.T) {
 		}
 	}
 }
+
