@@ -14,6 +14,12 @@ func CompoundInterest(start, periods, rate float64) float64 {
 	return start * math.Pow(1.+rate, periods)
 }
 
+// Rate returns the rate for investment with given present and future values,
+// accruing constant compound interest.
+func Rate(pv, fv, periods float64) float64 {
+	return math.Pow(fv/pv, 1.0/periods) - 1
+}
+
 // PV (annuity) returns the required amount to put down in order to receive
 // rent for period times with given rate. A.k.a Series present worth (P/A, i, n).
 // E.g. to receive 1200 monthly over 15 years on an instrument that earns 4.5%
@@ -77,4 +83,3 @@ func RTC(v float64) float64 {
 func FTC(v float64) float64 {
 	return math.Trunc(v*100) / 100
 }
-

@@ -15,6 +15,15 @@ func TestCompoundInterest(t *testing.T) {
 	}
 }
 
+func TestRate(t *testing.T) {
+	if got, want := Rate(1000, 1440, 2), 0.2; math.Abs(got-want) > 0.0001 {
+		t.Errorf("Rate: got: %.2f want: %.2f", got, want)
+	}
+	if got, want := Rate(1440, 1000, -2), 0.2; math.Abs(got-want) > 0.0001 {
+		t.Errorf("Rate: got: %.2f want: %.2f", got, want)
+	}
+}
+
 func TestFV(t *testing.T) {
 	if got, want := RTC(FV(1596.18, 360, 0.03625/12)), 1036696.15; got != want {
 		t.Errorf("RTC(FV): got: %.2f want: %.2f", got, want)
@@ -89,4 +98,3 @@ func TestRoundting(t *testing.T) {
 		}
 	}
 }
-
