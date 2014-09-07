@@ -64,6 +64,16 @@ func exPMTFS() {
 	fmt.Printf("PMTFS: %f RTC(PMTFS): %.2f\n", pmt, finmath.RTC(pmt))
 }
 
+func exRate() {
+	fmt.Println("Exter PV, FV, # of periods")
+	vals, err := read3Values()
+	if err != nil {
+		fmt.Println("Error reading values: ", err)
+	}
+	r := finmath.Rate(vals[0], vals[1], vals[2])
+	fmt.Printf("Rate: %.4f (%.2f%%)\n", r, r*100)
+}
+
 func exCI() {
 	fmt.Println("Enter PV/FV, # of periods and rate per period:")
 	vals, err := read3Values()
@@ -115,6 +125,7 @@ func help() {
 	fmt.Println("\tPMTF: sinking fund (A/F, i, n)")
 	fmt.Println("\tPMTG: arithmetic gradient uniform series (A/G, i, n)")
 	fmt.Println("\tCI: compound interest (F/P, i, n) or (P/F, i, n), if n is negative")
+	fmt.Println("\tRATE: to calculate rate given PV, FV and number of terms")
 	fmt.Println("\tFV: series compound amount (F/A, i, n)")
 	fmt.Println("\tPV: series present worth (P/A, i, n)")
 	fmt.Println("\tPVG: arithmetic gradient present worth (P/G, i, n)")
@@ -142,6 +153,8 @@ func main() {
 			help()
 		case "ci":
 			exCI()
+		case "rate":
+			exRate()
 		case "pvg":
 			exPMTG(false)
 		case "pmtg":
@@ -161,4 +174,3 @@ func main() {
 		}
 	}
 }
-
